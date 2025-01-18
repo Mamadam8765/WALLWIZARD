@@ -796,3 +796,114 @@ def check_walls_player2(m2):
         else:
             player2_move(m2)        
 
+def player1_move(m1) :
+    global i1 , x , i2
+    if i1 in down_index:
+        print("player_1 won the game !!!")
+        exit()
+    else:
+        if m1 == "d":
+            if i1 + x == i2:
+                if board_template[i1 + 114] == "#":
+                    user1_input = int(input("player_1 => u can go 1_(dow_left) or 2_(down_right) : "))
+                    if user1_input == 1:
+                        i1 += 72
+                    elif user1_input == 2:
+                        i1 += 80
+                else:
+                    i1 += 152
+            else:
+                i1 += x
+        elif m1 == "u":
+            if i1 - x == i2:
+                if board_template[i1 - 114] == "#":
+                    user1_input = int(input(print("player_1 => u can go 1_(up_left) or 2_(up_right) : ")))
+                    if user1_input == 1:
+                        i1 -= 80
+                    elif user1_input == 2:
+                        i1 -= 72
+                else:
+                    i1 -= 152
+            else :
+                i1 -= x
+        elif m1 == "r":
+            if i1 + 4 == i2:
+                if board_template[i1 + 6] == "#":
+                    user1_input = int(input(print("player_1 => u can go 1_(right_up) or 2_(right_down) : ")))
+                    if user1_input == 1:
+                        i1 -= 72
+                    elif user1_input == 2:
+                        i1 += 80
+                else :
+                    i1 += 8
+            else:
+                i1 += 4
+        elif m1 == "l":
+            if i1 - 4 == i2:
+                if board_template[i1 - 6] == "#":
+                    user1_input = int(input(print("player_1 => u can go 1_(left_up) or 2_(left_down) : ")))
+                    if user1_input == 1:
+                        i1 -= 80
+                    elif user1_input == 2:
+                        i1 += 80
+                else:
+                    i1 -= 8
+            else:
+                i1 -= 4
+
+
+
+def player2_move(m2) :
+    global i2 , x , i1
+    if i2 in up_index:
+        print("player_1 won the game !!!")
+        exit()
+    else:
+        if m2 == "d":
+            if i2 + x == i1:
+                if board_template[i2 + 114] == "#":
+                    user2_input = int(input("player_1 => u can go 1_(dow_left) or 2_(down_right) : "))
+                    if user2_input == 1:
+                        i2 += 72
+                    elif user2_input == 2:
+                        i2 += 80
+                else:
+                    i2 += 152
+            else:
+                i2 += x
+        elif m2 == "u":
+            if i2 - x == i1:
+                if board_template[i2 - 114] == "#":
+                    user2_input = int(input("player_1 => u can go 1_(up_left) or 2_(up_right) : "))
+                    if user2_input == 1:
+                        i2 -= 80
+                    elif user2_input == 2:
+                        i2 -= 72
+                else:
+                    i2 -= 152
+            else :
+                i2 -= x
+        elif m2 == "r":
+            if i2 + 4 == i1:
+                if board_template[i2 + 6] == "#":
+                    user2_input = int(input("player_1 => u can go 1_(right_up) or 2_(right_down) : "))
+                    if user2_input == 1:
+                        i2 -= 72
+                    elif user2_input == 2:
+                        i2 += 80
+                else :
+                    i2 += 8
+            else:
+                i2 += 4
+        elif m2 == "l":
+            if i2 - 4 == i1:
+                if board_template[i2 - 6] == "#":
+                    user2_input = int(input("player_1 => u can go 1_(left_up) or 2_(left_down) : "))
+                    if user2_input == 1:
+                        i2 -= 80
+                    elif user2_input == 2:
+                        i2 += 80
+                else:
+                    i2 -= 8
+            else:
+                i2 -= 4
