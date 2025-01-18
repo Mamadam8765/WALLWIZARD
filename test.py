@@ -288,3 +288,67 @@ def login_signup_player2(choice2):
             login_signup_player2(choice2)
     elif choice2 == 4 :
         exit()
+
+def player1_DFS(i1, visited1=None):
+    global x
+    if visited1 is None:
+        visited1 = []  
+
+    if i1 in down_index:  
+        return True
+
+    if i1 in visited1:
+        return False
+
+
+    visited1.append(i1)
+
+
+    if board_template[i1 - 38] != "#" and (i1 - x) not in visited1:
+        if player1_DFS(i1 - x, visited1):
+            return True
+    if board_template[i1 + 2] != "#" and (i1 + 4) not in visited1:
+        if player1_DFS(i1 + 4, visited1):
+            return True
+    if board_template[i1 - 2] != "#" and (i1 - 4) not in visited1:
+        if player1_DFS(i1 - 4, visited1):
+            return True
+    if board_template[i1 + 38] != "#" and (i1 + x) not in visited1:
+        if player1_DFS(i1 + x, visited1):
+            return True
+
+
+    return False
+
+
+
+def player2_DFS(i2 , visited2=None):
+    global x
+
+    if visited2 is None:
+        visited2 = []
+
+    if i2 in up_index:
+        return True
+
+    if i2 in visited2:
+        return False
+
+    visited2.append(i2)
+
+    if board_template[i2 - 38] != "#" and (i2 - x) not in visited2:
+        if player2_DFS(i2 - x , visited2):
+            return True
+    if board_template[i2 + 2] != "#" and (i2 + 4) not in visited2:
+        if player2_DFS(i2 + 4 , visited2):
+            return True
+    if board_template[i2 - 2] != "#" and (i2 - 4) not in visited2:
+        if player2_DFS(i2 - 4 , visited2):
+            return True
+    if board_template[i2 + 38] != "#" and (i2 + x) not in visited2:
+        if player2_DFS(i2 + x , visited2):
+            return True
+
+    return False
+
+
