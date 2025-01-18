@@ -907,3 +907,17 @@ def player2_move(m2) :
                     i2 -= 8
             else:
                 i2 -= 4
+
+choice1 = choice1_menuـp1()  
+login_signup_player1(choice1)
+time.sleep(2)
+choice2 = choice1_menuـp2()  
+login_signup_player2(choice2)
+
+
+console.print(update_board(i1, i2, x))
+first_player = random.randint(1 , 2)
+if first_player == 1 :
+    player1_action()
+else :
+    player2_action()
