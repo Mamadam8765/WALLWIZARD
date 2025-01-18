@@ -133,3 +133,158 @@ def display_menu_p2(options, selected):
             print(f"\033[48;2;255;105;235m{option}\033[0m") # نمایش رنگ انتخاب‌شده
         else:
             print(option)
+
+def choice1_menuـp1():
+    options = ["    (LOGIN)", "", "        (SIGNUP)" , "" , "              (EXIT)"]
+    selected = 0
+
+    while True:
+        print("\033c", end="")  # Clear screen
+        print("Player 1 -- > Use arrow keys to select and press E:\n")
+        display_menu_p1(options, selected)
+        event = keyboard.read_event()
+
+        if event.event_type == keyboard.KEY_DOWN and event.name == 'down':
+            selected = (selected + 2) % len(options)
+        elif event.event_type == keyboard.KEY_DOWN and event.name == 'up':
+            selected = (selected - 2) % len(options)
+        elif event.event_type == keyboard.KEY_DOWN and event.name == 'e':
+            print("")
+            return selected
+
+def choice1_menuـp2():
+    options = ["    (LOGIN)", "", "        (SIGNUP)" , "" , "              (EXIT)"]
+    selected = 0
+
+    while True:
+        print("\033c", end="")  # Clear screen
+        print("Player 2 -- > Use arrow keys to select and press E:\n")
+        display_menu_p2(options, selected)
+        event = keyboard.read_event()
+
+        if event.event_type == keyboard.KEY_DOWN and event.name == 'down':
+            selected = (selected + 2) % len(options)
+        elif event.event_type == keyboard.KEY_DOWN and event.name == 'up':
+            selected = (selected - 2) % len(options)
+        elif event.event_type == keyboard.KEY_DOWN and event.name == 'e':
+            print("")
+            return selected
+
+
+
+# signup or login section for player 1
+def login_signup_player1(choice1):
+    user_id = None
+    if choice1 == 2 :
+        # getting email and password from user 1
+        email = check_email()
+        password = check_password()
+
+        # check if the email is unique
+        if email in users:
+            print("This email already exists. \n")
+            email = check_email()
+        else:
+            # generating uuid for new users
+            user_id = str(uuid.uuid4())
+            # saving new users data
+        users[email] = {
+            "id": user_id,
+            "email": email,
+            "password": password
+        }
+        
+        save_users(users)
+        print("User registered successfully.\n")
+        
+    elif choice1 == 0 :
+
+        # LOGIN process
+        email = check_email()
+
+        if email in users:
+            password = input("Enter your password: ")
+            password = password.encode('utf-8')
+            password = hashlib.sha256(password).hexdigest()
+
+            print("")
+            if password == users[email]["password"]:
+                print("Player 1 -- > You have successfully logged in!")
+                print("")
+            else:
+                print("Incorrect password. Please try again.")
+                delay_with_countdown()
+                print("")
+                choice1 = choice1_menuـp1() 
+                login_signup_player1(choice1)
+        else:
+            print("No account found with this email. Please sign up. \n")
+            delay_with_countdown()
+            print("")
+            choice1 = choice1_menuـp1() 
+            login_signup_player1(choice1)
+    elif choice1 == 4 :
+        exit()
+
+# signup or login section for player 2
+def login_signup_player2(choice2):
+    if choice2 == 2 :
+        # getting email and password from user 1
+        email = check_email()
+        password = check_password()
+
+        # check if the email is unique
+        if email in users:
+            print("This email already exists. \n")
+            email = check_email()
+        else:
+            # generating uuid for new users
+            user_id = str(uuid.uuid4())
+            # saving new users data
+        users[email] = {
+            "id": user_id,
+            "email": email,
+            "password": password
+        }
+        
+        # saving new users data in json file
+        save_users(users)
+        print("User registered successfully. \n")
+        for i in range(3, 0, -1):
+            print(f"Game will start in {i}...")
+            time.sleep(1)
+        print("Done! \n")
+        clear_terminal_after_delay()
+    elif choice2 == 0 :
+
+        # LOGIN process
+        email = check_email()
+
+        if email in users:
+            password = input("Enter your password: ")
+
+            password = password.encode('utf-8')
+            password = hashlib.sha256(password).hexdigest()
+            print("")
+            if password == users[email]["password"]:
+                print("Player 2 -- > You have successfully logged in!\n")
+                for i in range(3, 0, -1):
+                    print(f"Game will start in {i}... \n")
+                    time.sleep(1)
+                print("Done! \n")
+                clear_terminal_after_delay()
+                
+            else:
+                print("Incorrect password. Please try again.")
+                delay_with_countdown()
+                print("")
+                choice2 = choice1_menuـp2() 
+                login_signup_player2(choice2)
+        else:
+            print("No account found with this email. Please sign up.")
+            delay_with_countdown()
+            print("")
+            choice2 = choice1_menuـp2() 
+            login_signup_player2(choice2)
+    elif choice2 == 4 :
+        exit()
