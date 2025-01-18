@@ -351,4 +351,448 @@ def player2_DFS(i2 , visited2=None):
 
     return False
 
+def player1_action():
+    global console, board_template , count_1
+    if i1 in down_index:
+        print("player_1 won the game !!!")
+        exit()
+    elif i2 in up_index:
+        print("player_2 won the game !!!")
+        exit()
+    else :
+        while i1 not in down_index:
+            p1_input = input("player_1 => W = PLACE WALL , M = MOVE : ").lower()
+            if p1_input == "exit":
+                print("player_1 left the game !!!")
+                exit()
+            if p1_input == "m":
+                m1 = input("player_1 => Enter your move (U, R, L, D): ").lower()
+                check_walls_player1(m1)
+                time.sleep(.7)
+                clear_terminal_after_delay()
+                console.print(update_board(i1, i2, x))
+                player2_action()
+            elif p1_input == "w":
+                print(f"u put {count_1} walls in game")
+                column1 = int(input("player_1 => Enter your column : "))
+                row1 = int(input("player_1 => Enter your row : "))
+                print("Hint => If you want to place down or up , the second part of the wall will be on left")
+                print("Hint => If you want to place left or right , the second part of the wall will be on down")
+                w1 = input("player_1 => Enter where do you want to place your wall (U , R , L , D) : ").lower()
+
+                board_list = list(board_template)
+
+                index = 38 + (76 * (row1 - 1)) + (4 * column1) - 2
+
+                if w1 == "l": 
+                    if board_list[index - 2] == "#" or board_list[index + 74] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if board_list[index + 38] == "#" and board_list[index + 34] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+
+                    if count_1 < 10 :
+                        board_list[index - 2] = "#"
+                        board_list[index + 36] = "#"
+                        board_list[index + 74] = "#"
+                        count_1 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        print("u dont have wall !!!")
+                        player1_action()
+
+                    if not player2_DFS(i2):
+                        print("You can't place the wall there, it blocks the path.")
+                        count_1 -= 1
+                        board_list[index - 2] = "|"
+                        board_list[index + 36] = "+"
+                        board_list[index + 74] = "|"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player2_action()
+
+                elif w1 == "r": 
+                    if board_list[index + 2] == "#" or board_list[index + 78] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if board_list[index + 38] == "#" and board_list[index + 42] == "#":
+                        print("there is wall !!!")
+                        player1_action()
+                    if count_1 < 10:
+                        board_list[index + 2] = "#"
+                        board_list[index + 40] = "#"
+                        board_list[index + 78] = "#"
+                        count_1 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else : 
+                        print("u dont have wall !!!")
+                        player1_action()
+
+                    if not player2_DFS(i2):
+                        print("You can't place the wall there, it blocks the path.")
+                        count_1 -= 1
+                        board_list[index + 2] = "|"
+                        board_list[index + 40] = "+"
+                        board_list[index + 78] = "|"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player2_action()
+
+                elif w1 == "u":  
+                    if board_list[index - 38] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if board_list[index - 40] == "#" :
+                        print("There is already a wall there!")
+                        player1_action()
+                    if count_1 < 10:
+                        board_list[index - 37] = "#"
+                        board_list[index - 38] = "#"
+                        board_list[index - 39] = "#"
+                        board_list[index - 40] = "#"
+                        board_list[index - 41] = "#"
+                        board_list[index - 42] = "#"
+                        board_list[index - 43] = "#"
+                        count_1 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board  
+                    else:
+                        print("u dont have wall !!!")
+                        player1_action()
+
+
+                    if not player2_DFS(i2):
+                        print("You can't place the wall there, it blocks the path.")
+                        count_1 -= 1
+                        board_list[index - 37] = "-"
+                        board_list[index - 38] = "-"
+                        board_list[index - 39] = "-"
+                        board_list[index - 40] = "+"
+                        board_list[index - 41] = "-"
+                        board_list[index - 42] = "-"
+                        board_list[index - 43] = "-"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player2_action()
+
+                elif w1 == "d":  
+                    if board_list[index + 38] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if board_list[index + 36] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if count_1 < 10:
+                        board_list[index + 38] = "#"
+                        board_list[index + 37] = "#"
+                        board_list[index + 39] = "#"
+                        board_list[index + 36] = "#"
+                        board_list[index + 35] = "#"
+                        board_list[index + 34] = "#"
+                        board_list[index + 33] = "#"
+                        count_1 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        print("u dont have wall !!!")
+                        player1_action()
+
+                    if not player2_DFS(i2):
+                        print("You can't place the wall there, it blocks the path.")
+                        count_1 -= 1
+                        board_list[index + 38] = "-"
+                        board_list[index + 37] = "-"
+                        board_list[index + 39] = "-"
+                        board_list[index + 36] = "+"
+                        board_list[index + 35] = "-"
+                        board_list[index + 34] = "-"
+                        board_list[index + 33] = "-"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player2_action()
+
+
+def player2_action():
+    global console, board_template , count_2
+    if i1 in down_index:
+        print("player_1 won the game !!!")
+        exit()
+    elif i2 in up_index:
+        print("player_2 won the game !!!")
+        exit()
+    else:
+        while i2 not in up_index:
+            p2_input = input("player_2 => W = PLACE WALL , M = MOVE : ").lower()
+            if p2_input == "exit":
+                print("player_1 left the game !!!")
+                exit()
+            if p2_input == "m":
+                m2 = input("player_2 => Enter your move (U, R, L, D): ").lower()
+                check_walls_player2(m2)
+                time.sleep(.7)
+                clear_terminal_after_delay()
+                console.print(update_board(i1, i2, x))
+                player1_action()
+            elif p2_input == "w":
+                print(f"u put {count_2} walls in game")
+                column2 = int(input("player_2 => Enter your column : "))
+                row2 = int(input("player_2 => Enter your row : "))
+                print("Hint => If you want to place down or up , the second part of the wall will be on left")
+                print("Hint => If you want to place left or right , the second part of the wall will be on down")
+                w2 = input("player_2 => Enter where do you want to place your wall (U , R , L , D) : ").lower()
+
+                board_list = list(board_template)
+
+
+                index = 38 + (76 * (row2 - 1)) + (4 * column2) - 2
+
+                if w2 == "l": 
+                    if board_list[index - 2] == "#" or board_list[index + 74] == "#":
+                        print("there is wall !!!")
+                        player2_action()
+                    if board_list[index + 38] == "#" and board_list[index + 34] == "#":
+                        print("There is already a wall there!")
+                        player2_action()
+                    if count_2 < 10:
+                        board_list[index - 2] = "#"
+                        board_list[index + 36] = "#"
+                        board_list[index + 74] = "#"
+                        count_2 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board     
+                    else:
+                        print("u dont have wall !!!")
+                        player2_action()      
+
+
+                    if not player1_DFS(i1):  
+                        print("You can't place the wall there, it blocks the path.")
+                        count_2 -= 1
+                        board_list[index - 2] = "|"
+                        board_list[index + 36] = "+"
+                        board_list[index + 74] = "|"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player1_action()
+
+                elif w2 == "r": 
+                    if board_list[index + 2] == "#" or board_list[index + 78] == "#":
+                        print("there is wall !!!")
+                        player2_action()
+                    if board_list[index + 38] == "#" and board_list[index + 42] == "#":
+                        print("there is wall !!!")
+                        player2_action()
+                    if count_2 < 10:
+                        board_list[index + 2] = "#"
+                        board_list[index + 40] = "#"
+                        board_list[index + 78] = "#"
+                        count_2 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        print("u dont have wall !!!")
+                        player2_action()
+
+
+                    if not player1_DFS(i1):  
+                        print("You can't place the wall there, it blocks the path.")
+                        count_2 -= 1
+                        board_list[index + 2] = "|"
+                        board_list[index + 40] = "+"
+                        board_list[index + 78] = "|"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player1_action()
+
+                elif w2 == "u": 
+                    if board_list[index - 38] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if board_list[index - 40] == "#" :
+                        print("There is already a wall there!")
+                        player1_action()
+                    if count_2 < 10:
+                        board_list[index - 37] = "#"
+                        board_list[index - 38] = "#"
+                        board_list[index - 39] = "#"
+                        board_list[index - 40] = "#"
+                        board_list[index - 41] = "#"
+                        board_list[index - 42] = "#"
+                        board_list[index - 43] = "#"
+                        count_2 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        print("u dont have wall !!!")
+                        player2_action()
+
+                    if not player1_DFS(i1): 
+                        print("You can't place the wall there, it blocks the path.")
+                        count_2 -= 1
+                        board_list[index - 37] = "-"
+                        board_list[index - 38] = "-"
+                        board_list[index - 39] = "-"
+                        board_list[index - 40] = "+"
+                        board_list[index - 41] = "-"
+                        board_list[index - 42] = "-"
+                        board_list[index - 43] = "-"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player1_action()
+
+                elif w2 == "d": 
+                    if board_list[index + 38] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if board_list[index + 36] == "#":
+                        print("There is already a wall there!")
+                        player1_action()
+                    if count_2 < 10:
+                        board_list[index + 38] = "#"
+                        board_list[index + 37] = "#"
+                        board_list[index + 39] = "#"
+                        board_list[index + 36] = "#"
+                        board_list[index + 35] = "#"
+                        board_list[index + 34] = "#"
+                        board_list[index + 33] = "#"
+                        count_2 += 1
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        print("u dont have wall !!!")
+                        player2_action()
+
+                    if not player1_DFS(i1):  
+                        print("You can't place the wall there, it blocks the path.")
+                        count_2 -= 1
+                        board_list[index + 38] = "-"
+                        board_list[index + 37] = "-"
+                        board_list[index + 39] = "-"
+                        board_list[index + 36] = "+"
+                        board_list[index + 35] = "-"
+                        board_list[index + 34] = "-"
+                        board_list[index + 33] = "-"
+                        updated_board = ''.join(board_list)
+                        board_template = updated_board
+                    else:
+                        time.sleep(.7)
+                        clear_terminal_after_delay()
+                        console.print(update_board(i1, i2, x))
+                        player1_action()
+
+
+
+
+
+def update_board(i1, i2, x):
+    if i2 > i1 :
+        board = board_template[:i1] + "[#2196f3]●[/#2196f3]" + board_template[i1 + 1:i2] + "[#ff69eb]●[/#ff69eb]" + board_template[i2 + 1:]
+        return board
+
+    elif i1 > i2 :
+        board = board_template[:i2] + "[#ff69eb]●[/#ff69eb]" + board_template[i2 + 1:i1] + "[#2196f3]●[/#2196f3]" + board_template[i1 + 1:]
+        return board
+
+
+def check_walls_player1(m1) :
+    global i1 , x 
+    while m1 not in ["u" , "d" , "l" , "r"]:
+        print("wrong input")
+        m1 = input("player_1 => Enter your move (U, R, L, D): ").lower()
+    if m1 == "u" :
+        if board_template[i1 - 38] == "#" :
+            print("u cant go there !")
+            m1 = input("player_1 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player1(m1)
+        else : 
+            player1_move(m1)
+    elif m1 == "d" :
+        if board_template[i1 + 38] == "#" :
+            print("u cant go there !")
+            m1 = input("player_1 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player1(m1)
+        else : 
+            player1_move(m1)
+    elif m1 == "l" :
+        if board_template[i1 - 2] == "#" :
+            print("cant go there !")
+            m1 = input("player_1 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player1(m1)
+        else : 
+            player1_move(m1)
+    elif m1 == "r" :
+        if board_template[i1 + 2] == "#" :
+            print("u cant go there !")
+            m1 = input("player_1 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player1(m1)
+        else : 
+            player1_move(m1)
+
+
+def check_walls_player2(m2):
+    global i2, x
+    while m2 not in ["u" , "d" , "l" , "r"]:
+        print("wrong input")
+        m2 = input("player_2 => Enter your move (U, R, L, D): ").lower()
+    
+    if m2 == "u":
+        if board_template[i2 - 38] == "#":
+            print("You can't go there!")
+            m2 = input("player_2 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player2(m2)
+        else:
+            player2_move(m2)
+    elif m2 == "d":
+        if board_template[i2 + 38] == "#":
+            print("You can't go there!")
+            m2 = input("player_2 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player2(m2)
+        else:
+            player2_move(m2)
+    elif m2 == "l":
+        if board_template[i2 - 2] == "#":
+            print("You can't go there!")
+            m2 = input("player_2 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player2(m2)
+        else:
+            player2_move(m2)
+    elif m2 == "r":
+        if board_template[i2 + 2] == "#":
+            print("You can't go there!")
+            m2 = input("player_2 => Enter your move (U, R, L, D): ").lower()
+            check_walls_player2(m2)
+        else:
+            player2_move(m2)        
 
